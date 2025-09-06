@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sketch Portfolio | Advanced Design</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Rough.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/roughjs@4.5.2/bundled/rough.js"></script>
+    
+    <!-- Particles.js CDN -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <!-- Three.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- Anime.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    
+    <!-- mo.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mojs/1.0.0/mo.min.js"></script>
+    
+    <!-- Lenis Smooth Scroll -->
+    <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Comic+Neue:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #ff6b6b;
+            --secondary: #4ecdc4;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --accent: #ffd166;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Comic Neue', cursive;
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h100v100H0z' fill='none'/%3E%3Cpath d='M10 10h80v80H10z' stroke='%23ff6b6b21' stroke-width='0.5' fill='none'/%3E%3C/svg%3E");
+        }
+        
+        .sketch-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.05;
+        }
+        
+        /* Header Styles */
+        #header {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            z-index: 10;
+            position: relative;
+        }
+        
+        .hand-drawn-title {
+            font-family: 'Architects Daughter', cursive;
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .hand-drawn-subtitle {
+            font-family: 'Architects Daughter', cursive;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--secondary);
+        }
+        
+        .sketch-border {
+            border: 3px solid var(--dark) !important;
+            border-radius: 255px 15px 225px 15px/15px 225px 15px 255px !important;
+        }
+        
+        /* Navigation */
+        #main-nav {
+            transition: all 0.4s ease;
+            padding: 1.5rem 0;
+        }
+        
+        #main-nav.scrolled {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 0.75rem 0;
+        }
+        
+        .nav-link {
+            font-weight: 700;
+            margin: 0 0.5rem;
+            position: relative;
+            color: var(--dark) !important;
+        }
+        
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover:after {
+            width: 100%;
+        }
+        
+        /* Section Styles */
+        section {
+            padding: 6rem 0;
+            position: relative;
+        }
+        
+        .section-title {
+            font-family: 'Architects Daughter', cursive;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: var(--primary);
+        }
+        
+        /* About Section */
+        .about-img {
+            border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+            border: 3px solid var(--dark);
+            padding: 5px;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Portfolio Section */
+        .portfolio-item {
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+        }
+        
+        .portfolio-card {
+            border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+            border: 3px solid var(--dark);
+            background: white;
+            overflow: hidden;
+            height: 100%;
+            transition: all 0.3s ease;
+        }
+        
+        .portfolio-card:hover {
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Skills Section */
+        .skill-bar {
+            height: 25px;
+            background: white;
+            border-radius: 15px;
+            border: 2px solid var(--dark);
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .skill-progress {
+            height: 100%;
+            border-radius: 15px;
+            background: var(--primary);
+            width: 0;
+            transition: width 1.5s ease-in-out;
+        }
+        
+        .skill-name {
+            position: absolute;
+            left: 15px;
+            top: 0;
+            line-height: 25px;
+            color: white;
+            font-weight: bold;
+            mix-blend-mode: difference;
+        }
+        
+        /* Contact Section */
+        .contact-form {
+            background: white;
+            padding: 3rem;
+            border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+            border: 3px solid var(--dark);
+        }
+        
+        .form-control {
+            border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+            border: 2px solid var(--dark);
+            padding: 0.75rem 1.5rem;
+            margin-bottom: 1.5rem;
+            background: rgba(255, 255, 255, 0.8);
+        }
+        
+        .form-control:focus {
+            box-shadow: 0 0 0 0.25rem rgba(255, 107, 107, 0.25);
+            border-color: var(--primary);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .social-links {
+            margin-bottom: 1.5rem;
+        }
+        
+        .social-link {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            line-height: 50px;
+            margin: 0 0.5rem;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            transform: translateY(-5px);
+            background: var(--secondary);
+            color: var(--dark);
+        }
+        
+        /* Canvas for Rough.js drawings */
+        .rough-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        /* Particles container */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        
+        /* Three.js container */
+        #three-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .hand-drawn-title {
+                font-size: 3rem;
+            }
+            
+            .hand-drawn-subtitle {
+                font-size: 1.5rem;
+            }
+            
+            .section-title {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hand-drawn-title {
+                font-size: 2.5rem;
+            }
+            
+            .hand-drawn-subtitle {
+                font-size: 1.25rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .contact-form {
+                padding: 2rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hand-drawn-title {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="main-nav" class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <span style="font-family: 'Architects Daughter', cursive; font-size: 1.8rem; color: var(--primary);">SketchFolio</span>
+            </a>
+            <button class="navbar-toggler sketch-border" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#header">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#portfolio">Portfolio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#skills">Skills</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header/Hero Section -->
+    <header id="header">
+        <div id="particles-js"></div>
+        <div id="three-container"></div>
+        <canvas class="rough-canvas" id="header-canvas"></canvas>
+        
+        <div class="container hero-content">
+            <div class="row justify-content-center text-center">
+                <div class="col-lg-8">
+                    <h1 class="hand-drawn-title" id="main-title">Creative Designer & Developer</h1>
+                    <p class="hand-drawn-subtitle" id="subtitle">Crafting unique digital experiences with a sketchy touch</p>
+                    <div class="mt-5">
+                        <a href="#portfolio" class="btn btn-sketch-primary sketch-border me-3 px-4 py-2">View Work</a>
+                        <a href="#contact" class="btn btn-sketch-outline sketch-border px-4 py-2">Contact Me</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="scroll-indicator">
+            <div class="mouse"></div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="bg-light">
+        <canvas class="rough-canvas" id="about-canvas"></canvas>
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-5 mb-lg-0">
+                    <img src="https://placehold.co/600x700/ff6b6b/white?text=Profile+Image" alt="Profile Image" class="img-fluid about-img w-100">
+                </div>
+                <div class="col-lg-6">
+                    <div class="ps-lg-5">
+                        <h3 class="mb-4" style="font-family: 'Architects Daughter', cursive; color: var(--secondary);">Hello! I'm Alex</h3>
+                        <p class="lead mb-4">I create unique digital experiences with a hand-drawn, sketchy aesthetic that stands out from the crowd.</p>
+                        <p class="mb-4">With over 5 years of experience in creative design and development, I specialize in building engaging interfaces that combine advanced technology with artistic expression.</p>
+                        <p class="mb-4">My approach blends traditional design principles with cutting-edge animation techniques to create memorable user experiences.</p>
+                        <div class="row mt-5">
+                            <div class="col-sm-6 mb-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="me-3">
+                                        <i class="fas fa-palette fa-2x" style="color: var(--primary);"></i>
+                                    </div>
+                                    <div>
+                                        <h5>UI/UX Design</h5>
+                                        <p class="mb-0">Creating intuitive interfaces</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 mb-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="me-3">
+                                        <i class="fas fa-code fa-2x" style="color: var(--secondary);"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Development</h5>
+                                        <p class="mb-0">Clean, efficient code</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 mb-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="me-3">
+                                        <i class="fas fa-pencil-alt fa-2x" style="color: var(--accent);"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Illustration</h5>
+                                        <p class="mb-0">Hand-drawn elements</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 mb-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="me-3">
+                                        <i class="fas fa-magic fa-2x" style="color: var(--primary);"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Animation</h5>
+                                        <p class="mb-0">Engaging interactions</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio">
+        <canvas class="rough-canvas" id="portfolio-canvas"></canvas>
+        <div class="container">
+            <h2 class="section-title">My Work</h2>
+            <div class="row">
+                <div class="col-md-6 col-lg-4 mb-4 portfolio-item">
+                    <div class="portfolio-card">
+                        <div class="portfolio-img">
+                            <img src="https://placehold.co/400x300/4ecdc4/white?text=Project+1" alt="Project 1" class="img-fluid">
+                        </div>
+                        <div class="p-4">
+                            <h4>Sketchy E-Commerce</h4>
+                            <p>An online store with hand-drawn elements and interactive product displays.</p>
+                            <a href="#" class="btn btn-sm sketch-border">View Project</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4 portfolio-item">
+                    <div class="portfolio-card">
+                        <div class="portfolio-img">
+                            <img src="https://placehold.co/400x300/ff6b6b/white?text=Project+2" alt="Project 2" class="img-fluid">
+                        </div>
+                        <div class="p-4">
+                            <h4>Animated Portfolio</h4>
+                            <p>A personal portfolio website with advanced animations and interactive elements.</p>
+                            <a href="#" class="btn btn-sm sketch-border">View Project</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4 portfolio-item">
+                    <div class="portfolio-card">
+                        <div class="portfolio-img">
+                            <img src="https://placehold.co/400x300/ffd166/white?text=Project+3" alt="Project 3" class="img-fluid">
+                        </div>
+                        <div class="p-4">
+                            <h4>Educational Platform</h4>
+                            <p>Learning management system with sketch-style UI and engaging interactions.</p>
+                            <a href="#" class="btn btn-sm sketch-border">View Project</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4 portfolio-item">
+                    <div class="portfolio-card">
+                        <div class="portfolio-img">
+                            <img src="https://placehold.co/400x300/1a1a2e/white?text=Project+4" alt="Project 4" class="img-fluid">
+                        </div>
+                        <div class="p-4">
+                            <h4>Travel App</h4>
+                            <p>Mobile application for travel enthusiasts with custom drawn maps and icons.</p>
+                            <a href="#" class="btn btn-sm sketch-border">View Project</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4 portfolio-item">
+                    <div class="portfolio-card">
+                        <div class="portfolio-img">
+                            <img src="https://placehold.co/400x300/4ecdc4/white?text=Project+5" alt="Project 5" class="img-fluid">
+                        </div>
+                        <div class="p-4">
+                            <h4>Restaurant Website</h4>
+                            <p>Interactive website for a restaurant with hand-drawn menus and reservation system.</p>
+                            <a href="#" class="btn btn-sm sketch-border">View Project</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4 portfolio-item">
+                    <div class="portfolio-card">
+                        <div class="portfolio-img">
+                            <img src="https://placehold.co/400x300/ff6b6b/white?text=Project+6" alt="Project 6" class="img-fluid">
+                        </div>
+                        <div class="p-4">
+                            <h4>Music Player</h4>
+                            <p>Custom music player with visualizations and sketch-style interface.</p>
+                            <a href="#" class="btn btn-sm sketch-border">View Project</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="bg-light">
+        <canvas class="rough-canvas" id="skills-canvas"></canvas>
+        <div class="container">
+            <h2 class="section-title">My Skills</h2>
+            <div class="row">
+                <div class="col-lg-6 mb-5">
+                    <h3 class="mb-4" style="font-family: 'Architects Daughter', cursive; color: var(--secondary);">Technical Abilities</h3>
+                    <div class="skill-item">
+                        <div class="d-flex justify-content-between">
+                            <span>UI/UX Design</span>
+                            <span>95%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="95%"></div>
+                            <span class="skill-name">UI/UX Design</span>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="d-flex justify-content-between">
+                            <span>HTML/CSS</span>
+                            <span>90%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="90%"></div>
+                            <span class="skill-name">HTML/CSS</span>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="d-flex justify-content-between">
+                            <span>JavaScript</span>
+                            <span>88%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="88%"></div>
+                            <span class="skill-name">JavaScript</span>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="d-flex justify-content-between">
+                            <span>React</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="85%"></div>
+                            <span class="skill-name">React</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <h3 class="mb-4" style="font-family: 'Architects Daughter', cursive; color: var(--secondary);">Creative Skills</h3>
+                    <div class="skill-item">
+                        <div class="d-flex justify-content-between">
+                            <span>Illustration</span>
+                            <span>92%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="92%"></div>
+                            <span class="skill-name">Illustration</span>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="d-flex justify-content-between">
+                            <span>Animation</span>
+                            <span>87%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="87%"></div>
+                            <span class="skill-name">Animation</span>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="d-flex justify-content-between">
+                            <span>Branding</span>
+                            <span>90%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="90%"></div>
+                            <span class="skill-name">Branding</span>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="d-flex justify-content-between">
+                            <span>Typography</span>
+                            <span>83%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="83%"></div>
+                            <span class="skill-name">Typography</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <canvas class="rough-canvas" id="contact-canvas"></canvas>
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="contact-form">
+                        <form id="contactForm">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <input type="text" class="form-control" placeholder="Your Name" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <input type="email" class="form-control" placeholder="Your Email" required>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" placeholder="Subject">
+                            </div>
+                            <div class="mb-3">
+                                <textarea class="form-control" rows="5" placeholder="Your Message" required></textarea>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-sketch-primary sketch-border px-5 py-2">Send Message</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-dribbble"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+            </div>
+            <p class="mb-2">© 2025 SketchFolio. All rights reserved.</p>
+            <p>Designed with <i class="fas fa-heart" style="color: var(--primary);"></i> by Alex</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <script>
+        // Initialize Lenis Smooth Scroll [citation:5][citation:10]
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        });
+        
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        
+        requestAnimationFrame(raf);
+        
+        // Initialize Particles.js [citation:2][citation:7]
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: "#ff6b6b" },
+                shape: { type: "circle" },
+                opacity: { value: 0.5, random: true },
+                size: { value: 3, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#4ecdc4",
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: "none",
+                    random: true,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "grab" },
+                    onclick: { enable: true, mode: "push" },
+                    resize: true
+                }
+            },
+            retina_detect: true
+        });
+        
+        // Initialize Rough.js for sketchy elements [citation:4][citation:9]
+        document.addEventListener('DOMContentLoaded', function() {
+            const roughCanvases = [
+                { id: 'header-canvas', type: 'header' },
+                { id: 'about-canvas', type: 'about' },
+                { id: 'portfolio-canvas', type: 'portfolio' },
+                { id: 'skills-canvas', type: 'skills' },
+                { id: 'contact-canvas', type: 'contact' }
+            ];
+            
+            roughCanvases.forEach(canvasInfo => {
+                const canvas = document.getElementById(canvasInfo.id);
+                const rc = rough.canvas(canvas);
+                const width = canvas.parentElement.offsetWidth;
+                const height = canvas.parentElement.offsetHeight;
+                canvas.width = width;
+                canvas.height = height;
+                
+                switch(canvasInfo.type) {
+                    case 'header':
+                        // Draw random shapes in header
+                        for (let i = 0; i < 15; i++) {
+                            const x = Math.random() * width;
+                            const y = Math.random() * height;
+                            const size = Math.random() * 100 + 20;
+                            
+                            if (Math.random() > 0.5) {
+                                rc.circle(x, y, size, {
+                                    roughness: 2,
+                                    stroke: 'rgba(255, 107, 107, 0.3)',
+                                    strokeWidth: 2
+                                });
+                            } else {
+                                rc.rectangle(x, y, size, size, {
+                                    roughness: 2,
+                                    stroke: 'rgba(78, 205, 196, 0.3)',
+                                    strokeWidth: 2
+                                });
+                            }
+                        }
+                        break;
+                    case 'about':
+                        // Draw decorative lines in about section
+                        for (let i = 0; i < 8; i++) {
+                            const x1 = Math.random() * width;
+                            const y1 = Math.random() * height;
+                            const x2 = Math.random() * width;
+                            const y2 = Math.random() * height;
+                            
+                            rc.line(x1, y1, x2, y2, {
+                                roughness: 2,
+                                stroke: 'rgba(26, 26, 46, 0.1)',
+                                strokeWidth: 1.5
+                            });
+                        }
+                        break;
+                    case 'portfolio':
+                        // Draw zigzag patterns in portfolio section
+                        for (let i = 0; i < 12; i++) {
+                            const x = Math.random() * width;
+                            const y = Math.random() * height;
+                            const size = Math.random() * 60 + 30;
+                            
+                            rc.rectangle(x, y, size, size, {
+                                roughness: 3,
+                                stroke: 'rgba(255, 209, 102, 0.2)',
+                                strokeWidth: 1.5,
+                                fill: 'rgba(255, 209, 102, 0.05)',
+                                fillStyle: 'zigzag'
+                            });
+                        }
+                        break;
+                    case 'skills':
+                        // Draw crosshatch patterns in skills section
+                        for (let i = 0; i < 10; i++) {
+                            const x = Math.random() * width;
+                            const y = Math.random() * height;
+                            const size = Math.random() * 80 + 40;
+                            
+                            rc.circle(x, y, size, {
+                                roughness: 2.5,
+                                stroke: 'rgba(255, 107, 107, 0.2)',
+                                strokeWidth: 1.5,
+                                fill: 'rgba(255, 107, 107, 0.05)',
+                                fillStyle: 'cross-hatch'
+                            });
+                        }
+                        break;
+                    case 'contact':
+                        // Draw dashed patterns in contact section
+                        for (let i = 0; i < 15; i++) {
+                            const x1 = Math.random() * width;
+                            const y1 = Math.random() * height;
+                            const x2 = Math.random() * width;
+                            const y2 = Math.random() * height;
+                            
+                            rc.line(x1, y1, x2, y2, {
+                                roughness: 1.5,
+                                stroke: 'rgba(78, 205, 196, 0.2)',
+                                strokeWidth: 1.5,
+                                strokeLineDash: [5, 5]
+                            });
+                        }
+                        break;
+                }
+            });
+        });
+        
+        // Initialize Three.js scene [citation:6]
+        function initThreeJS() {
+            const container = document.getElementById('three-container');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            
+            // Create scene
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true });
+            renderer.setSize(width, height);
+            container.appendChild(renderer.domElement);
+            
+            // Add floating geometric shapes
+            const geometry = new THREE.IcosahedronGeometry(1, 0);
+            const material = new THREE.MeshPhongMaterial({ 
+                color: 0xff6b6b, 
+                shininess: 100,
+                transparent: true,
+                opacity: 0.5
+            });
+            
+            const shapes = [];
+            for (let i = 0; i < 8; i++) {
+                const shape = new THREE.Mesh(geometry, material);
+                shape.position.x = Math.random() * 10 - 5;
+                shape.position.y = Math.random() * 10 - 5;
+                shape.position.z = Math.random() * 10 - 5;
+                shape.scale.setScalar(Math.random() * 0.8 + 0.5);
+                scene.add(shape);
+                shapes.push(shape);
+            }
+            
+            // Add lights
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(1, 1, 1);
+            scene.add(directionalLight);
+            
+            camera.position.z = 5;
+            
+            // Animation
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                shapes.forEach(shape => {
+                    shape.rotation.x += 0.005;
+                    shape.rotation.y += 0.008;
+                });
+                
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+            
+            // Handle resize
+            window.addEventListener('resize', () => {
+                const newWidth = container.clientWidth;
+                const newHeight = container.clientHeight;
+                renderer.setSize(newWidth, newHeight);
+                camera.aspect = newWidth / newHeight;
+                camera.updateProjectionMatrix();
+            });
+        }
+        
+        // Initialize animations with Anime.js [citation:1][citation:6]
+        function initAnimations() {
+            // Animate title
+            anime({
+                targets: '#main-title',
+                translateY: [-50, 0],
+                opacity: [0, 1],
+                duration: 1500,
+                easing: 'easeOutExpo'
+            });
+            
+            // Animate subtitle
+            anime({
+                targets: '#subtitle',
+                translateY: [50, 0],
+                opacity: [0, 1],
+                duration: 1500,
+                delay: 500,
+                easing: 'easeOutExpo'
+            });
+            
+            // Animate buttons
+            anime({
+                targets: '.btn',
+                translateY: [60, 0],
+                opacity: [0, 1],
+                duration: 1500,
+                delay: anime.stagger(200),
+                easing: 'easeOutExpo'
+            });
+            
+            // Animate skill bars on scroll
+            const skillBars = document.querySelectorAll('.skill-progress');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const width = entry.target.getAttribute('data-width');
+                        anime({
+                            targets: entry.target,
+                            width: width,
+                            duration: 1800,
+                            easing: 'easeOutExpo'
+                        });
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            skillBars.forEach(bar => {
+                observer.observe(bar);
+            });
+            
+            // Animate portfolio items on scroll
+            const portfolioItems = document.querySelectorAll('.portfolio-item');
+            const portfolioObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        anime({
+                            targets: entry.target,
+                            translateY: [100, 0],
+                            opacity: [0, 1],
+                            duration: 1200,
+                            easing: 'easeOutExpo'
+                        });
+                        portfolioObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.2 });
+            
+            portfolioItems.forEach(item => {
+                portfolioObserver.observe(item);
+            });
+        }
+        
+        // Navbar scroll effect
+        function initNavbarScroll() {
+            const navbar = document.getElementById('main-nav');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+        }
+        
+        // Form submission animation
+        function initFormAnimation() {
+            const form = document.getElementById('contactForm');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const btn = form.querySelector('button[type="submit"]');
+                const originalText = btn.textContent;
+                
+                anime({
+                    targets: btn,
+                    scale: 0.95,
+                    duration: 200,
+                    easing: 'easeInOutExpo',
+                    complete: function() {
+                        btn.innerHTML = '<i class="fas fa-check"></i> Sent!';
+                        anime({
+                            targets: btn,
+                            scale: 1,
+                            duration: 600,
+                            easing: 'easeOutElastic(1, .8)'
+                        });
+                        
+                        setTimeout(() => {
+                            btn.textContent = originalText;
+                            form.reset();
+                        }, 2000);
+                    }
+                });
+            });
+        }
+        
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            initThreeJS();
+            initAnimations();
+            initNavbarScroll();
+            initFormAnimation();
+        });
+    </script>
+</body>
+</html>
