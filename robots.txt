@@ -1,0 +1,30 @@
+# --------------------------------------------
+# robots.txt for Hanzla Baig Portfolio Website
+# Author: Hanzla Baig | Founder of AquaScript
+# Purpose: Control how search engines crawl site
+# --------------------------------------------
+
+# Allow all major search engines full access
+User-agent: *
+Allow: /
+
+# Block irrelevant or sensitive directories
+Disallow: /node_modules/
+Disallow: /private/
+Disallow: /temp/
+Disallow: /drafts/
+Disallow: /backup/
+
+# Block build/system files
+Disallow: /*.json$
+Disallow: /*.log$
+Disallow: /*.config$
+Disallow: /*.zip$
+Disallow: /*.tar$
+Disallow: /*.gz$
+
+# Crawl-delay for aggressive bots (optional)
+# Crawl-delay: 5
+
+# Point to sitemap for better indexing
+Sitemap: https://wecoded-dev.github.io/Hanzla-Baig/sitemap.xml
